@@ -23,18 +23,18 @@ const InputEmployee = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      if (employee.afm.length !== 9) {
+      if (
+        !employee.first_name &&
+        !employee.last_name &&
+        !employee.afm &&
+        !employee.date_of_birth
+      ) {
         setShowModal({
           isModalOpen: true,
-          modalContent: "Please enter AFM with 9 digits",
+          modalContent: "Please enter values",
         });
       } else {
-        if (
-          employee.first_name &&
-          employee.last_name &&
-          employee.afm &&
-          employee.date_of_birth
-        ) {
+        if (employee.afm.length === 9) {
           const newEmployee = { ...employee };
           setShowModal({ isModalOpen: true, modalContent: "Employee added" });
           await fetch("http://localhost:5000/employee", {
@@ -52,7 +52,7 @@ const InputEmployee = () => {
         } else {
           setShowModal({
             isModalOpen: true,
-            modalContent: "Please enter values",
+            modalContent: "Please enter AFM with 9 digits",
           });
         }
       }
