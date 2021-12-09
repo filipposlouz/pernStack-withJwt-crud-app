@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import Modal from "react-bootstrap/Modal";
+import EmployeeModal from "./editEmployeeModal";
 
 const EditEmployee = ({ currentEmployee }) => {
   const [employee, setEmployee] = useState({ ...currentEmployee });
@@ -8,23 +9,39 @@ const EditEmployee = ({ currentEmployee }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [showModal, setShowModal] = useState({
+    isModalOpen: false,
+    modalContent: "",
+  });
+
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setEmployee({ ...employee, [name]: value });
   };
 
+  const closeModal = () => {
+    return setShowModal({ ...showModal, isModalOpen: false });
+  };
+
   const updateEmployee = async (e) => {
     e.preventDefault();
     try {
-      const body = { ...employee };
-      await fetch(`http://localhost:5000/employee/${body.id}`, {
-        method: "PUT",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      handleClose();
-      window.location.reload();
+      if (employee.afm.length !== 9) {
+        setShowModal({
+          isModalOpen: true,
+          modalContent: "Please enter AFM with 9 digits",
+        });
+      } else {
+        const body = { ...employee };
+        await fetch(`http://localhost:5000/employee/${body.id}`, {
+          method: "PUT",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        handleClose();
+        window.location.reload();
+      }
     } catch (err) {
       console.error(err.message);
     }
@@ -107,6 +124,12 @@ const EditEmployee = ({ currentEmployee }) => {
               </tr>
             </tbody>
           </table>
+          {showModal.isModalOpen && (
+            <EmployeeModal
+              closeModal={closeModal}
+              modalContent={showModal.modalContent}
+            />
+          )}
         </Modal.Body>
         <Modal.Footer>
           <button

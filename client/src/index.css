@@ -120,6 +120,7 @@ p {
 /*  global classes */
 
 /* section */
+
 .section,
 .container {
   width: 90vw;
@@ -136,6 +137,7 @@ p {
 .container {
   text-align: center;
 }
+
 .btn {
   display: inline-block;
   background: var(--clr-primary-5);
@@ -155,7 +157,7 @@ p {
   background: var(--clr-primary-1);
   color: var(--clr-primary-5);
 }
-.modal {
+.employeemodal {
   position: absolute;
   top: 11rem;
   display: inline-block;
@@ -167,7 +169,18 @@ p {
   text-transform: capitalize;
 }
 
-.modal p {
+.employeemodal p {
+  margin-bottom: 0;
+  color: var(--clr-red-dark);
+}
+.afmcheck {
+  top: 9rem;
+  margin: auto;
+  position: absolute;
+  text-align: center;
+  left: 37%;
+}
+.afmcheck p {
   margin-bottom: 0;
   color: var(--clr-red-dark);
 }

@@ -23,31 +23,38 @@ const InputEmployee = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      if (
-        employee.first_name &&
-        employee.last_name &&
-        employee.afm &&
-        employee.date_of_birth
-      ) {
-        const newEmployee = { ...employee };
-        setShowModal({ isModalOpen: true, modalContent: "Employee added" });
-        await fetch("http://localhost:5000/employee", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newEmployee),
-        });
-        setEmployees([...employees, newEmployee]);
-        setEmployee({
-          first_name: "",
-          last_name: "",
-          afm: "",
-          date_of_birth: "",
-        });
-      } else {
+      if (employee.afm.length !== 9) {
         setShowModal({
           isModalOpen: true,
-          modalContent: "Please enter values",
+          modalContent: "Please enter AFM with 9 digits",
         });
+      } else {
+        if (
+          employee.first_name &&
+          employee.last_name &&
+          employee.afm &&
+          employee.date_of_birth
+        ) {
+          const newEmployee = { ...employee };
+          setShowModal({ isModalOpen: true, modalContent: "Employee added" });
+          await fetch("http://localhost:5000/employee", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newEmployee),
+          });
+          setEmployees([...employees, newEmployee]);
+          setEmployee({
+            first_name: "",
+            last_name: "",
+            afm: "",
+            date_of_birth: "",
+          });
+        } else {
+          setShowModal({
+            isModalOpen: true,
+            modalContent: "Please enter values",
+          });
+        }
       }
     } catch (err) {
       console.error(err.message);
