@@ -8,9 +8,7 @@ const Modal = ({ modalContent, closeModal }) => {
   });
   return (
     <div className="modal">
-      <p style={{ alignItems: "center", textAlign: "center" }}>
-        {modalContent}
-      </p>
+      <p>{modalContent}</p>
     </div>
   );
 };

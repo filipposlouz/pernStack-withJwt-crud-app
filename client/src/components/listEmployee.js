@@ -72,10 +72,7 @@ const ListEmployees = () => {
                   />
                 </td>
                 <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => DeleteEmployee(id)}
-                  >
+                  <button className="btn" onClick={() => DeleteEmployee(id)}>
                     Delete
                   </button>
                 </td>

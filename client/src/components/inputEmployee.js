@@ -121,7 +121,8 @@ const InputEmployee = () => {
             <td>
               <button
                 type="submit"
-                className="btn btn-success"
+                className="btn"
+                style={{ marginTop: "0.55rem" }}
                 onClick={handleSubmit}
               >
                 Add
@@ -136,6 +137,7 @@ const InputEmployee = () => {
                 <td>{last_name}</td>
                 <td>{afm}</td>
                 <td>{date_of_birth}</td>
+                <td></td>
               </tr>
             );
           })}

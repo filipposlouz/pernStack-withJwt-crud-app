@@ -6,19 +6,13 @@ const Navbar = () => {
   return (
     <ul>
       <li>
-        <Link className="a" to="/">
-          Home
-        </Link>
+        <Link to="/">Home</Link>
       </li>
       <li>
-        <Link className="a" to="/list">
-          Show/Edit Employees
-        </Link>
+        <Link to="/list">Show/Edit Employees</Link>
       </li>
       <li>
-        <Link className="a" to="/input">
-          Add Employees
-        </Link>
+        <Link to="/input">Add Employees</Link>
       </li>
     </ul>
   );
