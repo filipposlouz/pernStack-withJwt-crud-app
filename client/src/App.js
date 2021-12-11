@@ -8,6 +8,8 @@ import Error from "./components/error";
 import Navbar from "./components/navbar";
 import InputEmployee from "./components/inputEmployee";
 import ListEmployees from "./components/listEmployee";
+import Login from "./components/login";
+import ProtectedRoute from "./components/protectedRoute";
 
 function App() {
   return (
@@ -17,8 +19,13 @@ function App() {
           <Navbar />
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route path="/input" element={<InputEmployee />} />
-            <Route path="/list" element={<ListEmployees />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/input" element={<ProtectedRoute route={"/input"} />}>
+              <Route path="/input" element={<InputEmployee />} />
+            </Route>
+            <Route path="/list" element={<ProtectedRoute route={"/list"} />}>
+              <Route path="/list" element={<ListEmployees />} />
+            </Route>
             <Route path="*" element={<Error />} />
           </Routes>
         </Router>
