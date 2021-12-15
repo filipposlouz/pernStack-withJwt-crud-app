@@ -7,10 +7,7 @@ const EmployeeModal = ({ modalContent, closeModal }) => {
     }, 3000);
   });
   return (
-    <div
-      className="employeemodal"
-      style={{ textAlign: "center", left: "55rem" }}
-    >
+    <div className="employeeModal" style={{ margin: "auto" }}>
       <p>{modalContent}</p>
     </div>
   );

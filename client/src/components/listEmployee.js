@@ -1,4 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableRow from "@mui/material/TableRow";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 // component
 import EditEmployee from "./editEmployee";
@@ -37,50 +45,75 @@ const ListEmployees = () => {
 
   return (
     <Fragment>
-      <h1 className="text-center" style={{ marginTop: "1rem" }}>
+      <h1
+        className="text-center"
+        style={{ marginTop: "1rem", marginBottom: "2rem", fontWeight: "bold" }}
+      >
         Show/Edit Employees
       </h1>
-      <table className="table" style={{ marginTop: "5rem" }}>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>AFM</th>
-            <th>Date of Birth</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {employees.map((employee) => {
-            let { id, first_name, last_name, afm, date_of_birth } = employee;
-            date_of_birth = date_of_birth.split("T");
-            return (
-              <tr key={id}>
-                <td>{id}</td>
-                <td>{first_name}</td>
-                <td>{last_name}</td>
-                <td>{afm}</td>
-                <td>{date_of_birth[0]}</td>
-                <td>
-                  <EditEmployee
-                    currentEmployee={{
-                      ...employee,
-                      date_of_birth: date_of_birth[0],
-                    }}
-                  />
-                </td>
-                <td>
-                  <button className="btn" onClick={() => DeleteEmployee(id)}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
+                ID
+              </TableCell>
+              <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
+                First Name
+              </TableCell>
+              <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
+                Last Name
+              </TableCell>
+              <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
+                AFM
+              </TableCell>
+              <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
+                Date of Birth
+              </TableCell>
+              <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
+                Edit
+              </TableCell>
+              <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
+                Delete
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {employees.map((employee) => {
+              let { id, first_name, last_name, afm, date_of_birth } = employee;
+              date_of_birth = date_of_birth.split("T");
+              return (
+                <TableRow key={id}>
+                  <TableCell>{id}</TableCell>
+                  <TableCell>{first_name}</TableCell>
+                  <TableCell>{last_name}</TableCell>
+                  <TableCell>{afm}</TableCell>
+                  <TableCell>{date_of_birth[0]}</TableCell>
+                  <TableCell>
+                    <EditEmployee
+                      currentEmployee={{
+                        ...employee,
+                        date_of_birth: date_of_birth[0],
+                      }}
+                      getEmployees={getEmployees}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      startIcon={<DeleteIcon />}
+                      style={{ backgroundColor: "#B80F0A", text: "white" }}
+                      onClick={() => DeleteEmployee(id)}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Fragment>
   );
 };

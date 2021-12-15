@@ -1,4 +1,12 @@
 import React, { Fragment, useState } from "react";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableRow from "@mui/material/TableRow";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import Modal from "./modal";
 
 const InputEmployee = () => {
@@ -67,89 +75,106 @@ const InputEmployee = () => {
 
   return (
     <Fragment>
-      <h1 className="text-center" style={{ marginTop: "1rem" }}>
+      <h1
+        className="text-center"
+        style={{
+          marginTop: "1rem",
+          marginBottom: "2rem",
+          fontWeight: "bold",
+          fontSize: 55,
+        }}
+      >
         Add Employee
       </h1>
       {showModal.isModalOpen && (
         <Modal closeModal={closeModal} modalContent={showModal.modalContent} />
       )}
-      <table className="table" style={{ marginTop: "5rem" }}>
-        <thead>
-          <tr>
-            <th>First Name:</th>
-            <th>Last Name:</th>
-            <th>AFM:</th>
-            <th>Date of Birth:</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <input
-                type="text"
-                className="form-control"
-                id="first_name"
-                name="first_name"
-                value={employee.first_name}
-                onChange={handleChange}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                className="form-control"
-                id="last_name"
-                name="last_name"
-                value={employee.last_name}
-                onChange={handleChange}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                className="form-control"
-                id="afm"
-                name="afm"
-                value={employee.afm}
-                onChange={handleChange}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                className="form-control"
-                id="date_of_birth"
-                name="date_of_birth"
-                value={employee.date_of_birth}
-                onChange={handleChange}
-              />
-            </td>
-            <td>
-              <button
-                type="submit"
-                className="btn"
-                style={{ marginTop: "0.55rem" }}
-                onClick={handleSubmit}
-              >
-                Add
-              </button>
-            </td>
-          </tr>
-          {employees.map((employee, index) => {
-            let { first_name, last_name, afm, date_of_birth } = employee;
-            return (
-              <tr key={index}>
-                <td>{first_name}</td>
-                <td>{last_name}</td>
-                <td>{afm}</td>
-                <td>{date_of_birth}</td>
-                <td></td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
+                First Name:
+              </TableCell>
+              <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
+                Last Name:
+              </TableCell>
+              <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
+                AFM:
+              </TableCell>
+              <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
+                Date of Birth:
+              </TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>
+                <TextField
+                  type="text"
+                  variant="standard"
+                  id="first_name"
+                  name="first_name"
+                  value={employee.first_name}
+                  onChange={handleChange}
+                />
+              </TableCell>
+              <TableCell>
+                <TextField
+                  type="text"
+                  variant="standard"
+                  id="last_name"
+                  name="last_name"
+                  value={employee.last_name}
+                  onChange={handleChange}
+                />
+              </TableCell>
+              <TableCell>
+                <TextField
+                  type="text"
+                  variant="standard"
+                  id="afm"
+                  name="afm"
+                  value={employee.afm}
+                  onChange={handleChange}
+                />
+              </TableCell>
+              <TableCell>
+                <TextField
+                  type="date"
+                  variant="standard"
+                  id="date_of_birth"
+                  name="date_of_birth"
+                  value={employee.date_of_birth}
+                  onChange={handleChange}
+                />
+              </TableCell>
+              <TableCell>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
+                >
+                  Add
+                </Button>
+              </TableCell>
+            </TableRow>
+            {employees.map((employee, index) => {
+              let { first_name, last_name, afm, date_of_birth } = employee;
+              return (
+                <TableRow key={index}>
+                  <TableCell>{first_name}</TableCell>
+                  <TableCell>{last_name}</TableCell>
+                  <TableCell>{afm}</TableCell>
+                  <TableCell>{date_of_birth}</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Fragment>
   );
 };

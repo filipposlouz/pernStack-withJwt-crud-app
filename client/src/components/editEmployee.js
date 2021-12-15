@@ -1,8 +1,16 @@
 import React, { Fragment, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import EmployeeModal from "./editEmployeeModal";
+import Button from "@mui/material/Button";
+import SaveIcon from "@mui/icons-material/Save";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableRow from "@mui/material/TableRow";
+import TextField from "@mui/material/TextField";
 
-const EditEmployee = ({ currentEmployee }) => {
+const EditEmployee = ({ currentEmployee, getEmployees }) => {
   const [employee, setEmployee] = useState({ ...currentEmployee });
   const [show, setShow] = useState(false);
 
@@ -40,7 +48,7 @@ const EditEmployee = ({ currentEmployee }) => {
           body: JSON.stringify(body),
         });
         handleClose();
-        window.location.reload();
+        getEmployees();
       }
     } catch (err) {
       console.error(err.message);
@@ -49,13 +57,9 @@ const EditEmployee = ({ currentEmployee }) => {
 
   return (
     <Fragment>
-      <button
-        className="btn btn-secondary"
-        variant="primary"
-        onClick={handleShow}
-      >
+      <Button variant="contained" onClick={handleShow} color="primary">
         Edit
-      </button>
+      </Button>
 
       <Modal size="lg" show={show} onHide={handleClose}>
         <Modal.Header>
@@ -70,82 +74,78 @@ const EditEmployee = ({ currentEmployee }) => {
           </button>
         </Modal.Header>
         <Modal.Body>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>AFM</th>
-                <th>Date of Birth</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="first_name"
-                    name="first_name"
-                    value={employee.first_name}
-                    onChange={handleChange}
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="last_name"
-                    name="last_name"
-                    value={employee.last_name}
-                    onChange={handleChange}
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="afm"
-                    name="afm"
-                    value={employee.afm}
-                    onChange={handleChange}
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="date_of_birth"
-                    name="date_of_birth"
-                    value={employee.date_of_birth}
-                    onChange={handleChange}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          {showModal.isModalOpen && (
-            <EmployeeModal
-              closeModal={closeModal}
-              modalContent={showModal.modalContent}
-            />
-          )}
+          <TableContainer>
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <TextField
+                      type="text"
+                      variant="standard"
+                      label="First Name"
+                      id="first_name"
+                      name="first_name"
+                      value={employee.first_name}
+                      onChange={handleChange}
+                      autoFocus="true"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <TextField
+                      type="text"
+                      variant="standard"
+                      label="Last Name"
+                      id="last_name"
+                      name="last_name"
+                      value={employee.last_name}
+                      onChange={handleChange}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <TextField
+                      type="text"
+                      variant="standard"
+                      label="AFM"
+                      id="afm"
+                      name="afm"
+                      value={employee.afm}
+                      onChange={handleChange}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <TextField
+                      type="date"
+                      variant="standard"
+                      label="Date of Birth"
+                      id="date_of_birth"
+                      name="date_of_birth"
+                      value={employee.date_of_birth}
+                      onChange={handleChange}
+                    />
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+            {showModal.isModalOpen && (
+              <EmployeeModal
+                closeModal={closeModal}
+                modalContent={showModal.modalContent}
+              />
+            )}
+          </TableContainer>
         </Modal.Body>
         <Modal.Footer>
-          <button
-            className="btn btn-danger"
-            variant="secondary"
-            onClick={handleClose}
-          >
+          <Button variant="contained" color="primary" onClick={handleClose}>
             Close
-          </button>
-          <button
-            className="btn btn-primary"
-            variant="primary"
+          </Button>
+          <Button
+            variant="contained"
             onClick={(e) => updateEmployee(e)}
+            style={{ backgroundColor: "green", text: "white" }}
+            startIcon={<SaveIcon />}
           >
             Save Changes
-          </button>
+          </Button>
         </Modal.Footer>
       </Modal>
     </Fragment>

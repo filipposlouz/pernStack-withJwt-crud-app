@@ -1,14 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import auth from "./auth";
 import "./navbar.css";
 
-const Navbar = (userState) => {
-  const [state, setState] = useState(userState);
-  console.log(auth.isAuthenticated());
-  useEffect(() => {
-    setState(auth.isAuthenticated());
-  }, [state]);
+const Navbar = ({ userState }) => {
   return (
     <ul>
       <li>
@@ -21,7 +15,7 @@ const Navbar = (userState) => {
         <Link to="/input">Add Employees</Link>
       </li>
       <li className="login">
-        {state ? (
+        {userState ? (
           <Link to="/logout">Logout</Link>
         ) : (
           <Link to="/login">Login</Link>

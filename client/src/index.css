@@ -157,9 +157,11 @@ p {
   background: var(--clr-primary-1);
   color: var(--clr-primary-5);
 }
-.employeemodal {
+.employeeModal {
   position: absolute;
-  top: 11rem;
+  top: 9rem;
+  text-align: center;
+  left: 53rem;
   display: inline-block;
   width: fit-content;
   margin: auto;
@@ -169,12 +171,12 @@ p {
   text-transform: capitalize;
 }
 
-.employeemodal p {
+.employeeModal p {
   margin-bottom: 0;
   color: var(--clr-red-dark);
 }
 .afmcheck {
-  top: 9rem;
+  top: 11rem;
   margin: auto;
   position: absolute;
   text-align: center;

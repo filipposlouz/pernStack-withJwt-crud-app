@@ -1,5 +1,3 @@
-import Navbar from "./navbar";
-
 class Auth {
   constructor() {
     this.authenticated = false;
