@@ -1,9 +1,13 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
+import auth from "./auth";
 
 const Logout = ({ callbackFunction }) => {
   callbackFunction(false);
+  const handleClick = () => {
+    auth.logout();
+  };
   return (
     <Fragment>
       <h1
@@ -16,7 +20,7 @@ const Logout = ({ callbackFunction }) => {
         Successfuly logged out.
       </h1>
       <Link to="/">
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={handleClick}>
           Back Home
         </Button>
       </Link>

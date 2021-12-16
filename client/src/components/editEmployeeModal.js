@@ -7,7 +7,7 @@ const EmployeeModal = ({ modalContent, closeModal }) => {
     }, 3000);
   });
   return (
-    <div className="afmcheck">
+    <div className="afmcheck" style={{ bottom: "4rem" }}>
       <p>{modalContent}</p>
     </div>
   );

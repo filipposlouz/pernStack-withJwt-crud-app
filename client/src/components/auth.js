@@ -20,9 +20,8 @@ class Auth {
     }
   }
 
-  logout(cb) {
+  logout() {
     this.authenticated = false;
-    cb();
   }
 
   setRoute(route) {
