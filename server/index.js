@@ -3,15 +3,30 @@ const app = express();
 const cors = require("cors");
 const pool = require("./db");
 const { json } = require("body-parser");
+const jwt = require("jsonwebtoken");
+
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+
+require("dotenv").config();
 
 // middleware
 app.use(cors());
 app.use(express.json()); // req.body
 
-// routes
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers["token"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token === null) return res.status(401);
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.status(403);
+    req.user = user;
+    next();
+  });
+};
 
 // create instance
-app.post("/employee", async (req, res) => {
+app.post("/employee", authenticateToken, async (req, res) => {
   try {
     const { first_name, last_name, afm, date_of_birth } = req.body;
     const newEmployee = await pool.query(
@@ -25,11 +40,56 @@ app.post("/employee", async (req, res) => {
 });
 
 // read all
-app.get("/employee", async (req, res) => {
+app.get("/employee", authenticateToken, async (req, res) => {
   try {
+    console.log("second", req);
     const allEmployees = await pool.query("SELECT * FROM employee");
     res.status(200).json(allEmployees.rows);
   } catch (err) {
+    console.error(err.message);
+  }
+});
+
+app.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await pool.query(`SELECT * FROM login WHERE username = $1`, [
+      username,
+    ]);
+    if (user.rows.length > 0) {
+      bcrypt.compare(password, user.rows[0].userpassword, (error, response) => {
+        if (response) {
+          const { id } = user.rows[0];
+          const token = jwt.sign(id, process.env.ACCESS_TOKEN_SECRET);
+          res.status(200).json({ success: true, token: token });
+        } else {
+          res.send({ success: false, message: "User doesn't exist." });
+        }
+      });
+    }
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+// testing
+app.put("/login", async (req, res) => {
+  try {
+    const { password } = req.body;
+    bcrypt.hash(password, saltRounds, async (err, hash) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(hash);
+      const result = pool.query(
+        "UPDATE login SET userpassword = $1 WHERE username = 'admin'",
+        [hash],
+        (err, result) => {
+          console.log(err);
+        }
+      );
+    });
+  } catch (error) {
     console.error(err.message);
   }
 });
