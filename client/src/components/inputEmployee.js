@@ -47,7 +47,10 @@ const InputEmployee = () => {
           setShowModal({ isModalOpen: true, modalContent: "Employee added" });
           await fetch("http://localhost:5000/employee", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              token: localStorage.getItem("authorization"),
+            },
             body: JSON.stringify(newEmployee),
           });
           setEmployees([...employees, newEmployee]);

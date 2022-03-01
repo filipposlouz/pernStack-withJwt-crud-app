@@ -6,14 +6,19 @@ class Auth {
 
   async login({ username, password }) {
     try {
-      let response = await fetch("http://localhost:5000/authenticateduser");
+      const data = { username: username, password: password };
+      let response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
       let jsonData = await response.json();
-      if (
-        username === jsonData[0].username &&
-        password === jsonData[0].userpassword
-      ) {
+      if (jsonData.success === true) {
         this.authenticated = true;
+        localStorage.setItem("authorization", "Bearer " + jsonData.token);
         return this.authenticated;
+      } else {
+        console.log(jsonData.message);
       }
     } catch (err) {
       console.error(err.message);

@@ -31,7 +31,13 @@ const ListEmployees = () => {
 
   const getEmployees = async () => {
     try {
-      const response = await fetch("http://localhost:5000/employee");
+      const response = await fetch("http://localhost:5000/employee", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.getItem("authorization"),
+        },
+      });
       const jsonData = await response.json();
       setEmployees(jsonData);
     } catch (err) {
